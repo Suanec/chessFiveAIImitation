@@ -62,6 +62,7 @@ class GiveupButton(Button):
                 game.winner = game.map.reverseTurn(game.player)
             self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[1])
             self.enable = False
+            game.useAI = False
             return True
         return False
 
@@ -131,6 +132,7 @@ class Game():
 
     def start(self):
         self.is_play = True
+        self.useAI = False
         self.player = MAP_ENTRY_TYPE.MAP_PLAYER_ONE
         self.map.reset()
 
