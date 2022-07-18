@@ -39,6 +39,7 @@ class StartButton(Button):
     def click(self, game):
         if self.enable:
             game.start()
+            game.play_entrance = game.normal_play
             game.winner = None
             self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[1])
             self.enable = False
