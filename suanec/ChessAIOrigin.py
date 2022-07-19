@@ -2,6 +2,7 @@ from GameMap import *
 from enum import IntEnum
 import copy
 import time
+import random
 
 
 class CHESS_TYPE(IntEnum):
@@ -64,6 +65,8 @@ class ChessAI():
     def search(self, board, turn):
         moves = self.genmove(board, turn)
         bestmove = None
+        bestmove_dict = dict()
+        bestmove_list = list()
         max_score = -0x7fffffff
         for score, x, y in moves:
             board[y][x] = turn.value
@@ -71,16 +74,21 @@ class ChessAI():
             # board为什么为0
             board[y][x] = 0
 
-            if score > max_score:
+            if score >= max_score:
                 max_score = score
                 bestmove = (max_score, x, y)
+                bestmove_list.append(bestmove)
+                bestmove_dict[bestmove[0]] = bestmove_dict.get(bestmove[0], []) + [bestmove]
+        bestmove_rst = bestmove_dict.get(max(bestmove_dict.keys()), [])
+        random.shuffle(bestmove_rst)
+        bestmove = bestmove_rst[-1]
         return bestmove
 
     def findBestChess(self, board, turn):
         time1 = time.time()
         score, x, y = self.search(board, turn)
         time2 = time.time()
-        print('time[%f] (%d, %d), score[%d] save[%d]' % ((time2 - time1), x, y, score, self.save_count))
+        print('OR : time[%f] (%d, %d), score[%d] save[%d]' % ((time2 - time1), x, y, score, self.save_count))
         return (x, y)
 
     # calculate score 评分函数：自己得分-对手得分

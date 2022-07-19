@@ -187,7 +187,7 @@ class ChessAI():
         self.belta = 0
         score, x, y = self.search(board, turn, AI_SEARCH_DEPTH)
         time2 = time.time()
-        print('time[%.2f] (%d, %d), score[%d] alpha[%d] belta[%d]' % (
+        print('FE : time[%.2f] (%d, %d), score[%d] alpha[%d] belta[%d]' % (
         (time2 - time1), x, y, score, self.alpha, self.belta))
         return (x, y)
 

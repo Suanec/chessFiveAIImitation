@@ -1,5 +1,6 @@
+import ChessAI
+import ChessAIOrigin
 from ChessAI import *
-
 
 class Button():
     def __init__(self, screen, text, x, y, color, enable):
@@ -31,7 +32,6 @@ class Button():
             self.screen.fill(self.button_color[1], self.rect)
         self.screen.blit(self.msg_image, self.msg_image_rect)
 
-
 class StartButton(Button):
     def __init__(self, screen, text, x, y):
         super().__init__(screen, text, x, y, [(26, 173, 25), (158, 217, 157)], True)
@@ -50,7 +50,6 @@ class StartButton(Button):
         if not self.enable:
             self.msg_image = self.font.render(self.text, True, self.text_color, self.button_color[0])
             self.enable = True
-
 
 class GiveupButton(Button):
     def __init__(self, screen, text, x, y):
@@ -127,7 +126,9 @@ class Game():
         self.map = Map(CHESS_LEN, CHESS_LEN)
         self.player = MAP_ENTRY_TYPE.MAP_PLAYER_ONE
         self.action = None
-        self.AI = ChessAI(CHESS_LEN)
+        self.FEAI = ChessAI(CHESS_LEN)
+        self.ORAI = ChessAIOrigin.ChessAI(CHESS_LEN)
+        self.AI = self.FEAI
         self.useAI = False
         self.winner = None
 
@@ -146,6 +147,11 @@ class Game():
 
         for button in self.buttons:
             button.draw()
+
+        if(self.player == MAP_ENTRY_TYPE.MAP_PLAYER_ONE):
+            self.AI = self.ORAI
+        elif(self.player == MAP_ENTRY_TYPE.MAP_PLAYER_TWO):
+            self.AI = self.FEAI
 
         if self.is_play and not self.isOver():
             if self.useAI:
