@@ -211,6 +211,10 @@ class Game():
         for button in self.buttons:
             button.draw()
 
+        if(self.player == MAP_ENTRY_TYPE.MAP_PLAYER_ONE):
+            self.AI = self.ORAI
+        elif(self.player == MAP_ENTRY_TYPE.MAP_PLAYER_TWO):
+            self.AI = self.FEAI
         if self.is_play and not self.isOver():
             if self.useAI:
                 x, y = self.AI.findBestChess(self.map.map, self.player)
